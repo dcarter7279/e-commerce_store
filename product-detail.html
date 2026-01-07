@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - E-Commerce Store</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/product-detail.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <h1 class="logo">E-Store</h1>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#products">Products</a></li>
+                    <li><a href="cart.html">Cart <span id="cart-count" class="cart-badge">0</span></a></li>
+                    <li><a href="multi-step-checkout.html">Checkout</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Breadcrumb Navigation -->
+        <section class="breadcrumb-section">
+            <div class="container">
+                <nav class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span class="separator">/</span>
+                    <a href="index.html#products">Products</a>
+                    <span class="separator">/</span>
+                    <span id="breadcrumb-category">Category</span>
+                    <span class="separator">/</span>
+                    <span id="breadcrumb-product" class="current">Product</span>
+                </nav>
+            </div>
+        </section>
+
+        <!-- Product Detail Section -->
+        <section class="product-detail-section">
+            <div class="container">
+                <div id="product-detail-container">
+                    <!-- Product details will be dynamically loaded here -->
+                    <div class="loading">Loading product details...</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Products Section -->
+        <section class="related-products-section">
+            <div class="container">
+                <h2 class="section-title">Related Products</h2>
+                <div id="related-products-container" class="products-grid">
+                    <!-- Related products will be dynamically loaded here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 E-Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { updateCartCount } from './js/cart.js';
+        import { renderProductDetail, renderRelatedProducts } from './js/product-detail.js';
+
+        // Get product ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = parseInt(urlParams.get('id'));
+
+        // Initialize page
+        updateCartCount();
+
+        if (productId) {
+            renderProductDetail(productId);
+            renderRelatedProducts(productId);
+        } else {
+            document.getElementById('product-detail-container').innerHTML = `
+                <div class="error-message">
+                    <h2>Product Not Found</h2>
+                    <p>The requested product could not be found.</p>
+                    <a href="index.html" class="btn">Back to Home</a>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
