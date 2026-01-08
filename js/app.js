@@ -1,8 +1,9 @@
 // Main Application File
 // Handles initialization and page-specific logic
 
-import { renderProducts, getProductById, searchProducts } from './products.js';
+import { renderProducts, getProductById } from './products.js';
 import { addToCart, updateCartCount } from './cart.js';
+import { initSearchAutocomplete } from './search.js';
 
 // State management
 let currentCategory = 'all';
@@ -87,43 +88,40 @@ function setupSearch() {
     const searchInput = document.getElementById('search-input');
     const searchBtn = document.querySelector('.search-btn');
 
+    // Initialize auto-complete (creates suggestions dropdown dynamically)
     if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.trim();
+        // Create suggestions container if it doesn't exist
+        let suggestionsContainer = document.getElementById('search-suggestions');
+        if (!suggestionsContainer) {
+            suggestionsContainer = document.createElement('div');
+            suggestionsContainer.id = 'search-suggestions';
+            suggestionsContainer.className = 'search-suggestions';
+            searchInput.parentNode.appendChild(suggestionsContainer);
+        }
 
-            if (query.length > 0) {
-                const results = searchProducts(query);
-                displaySearchResults(results);
-            } else {
-                renderProducts('products-container', currentCategory, currentSort);
+        // Initialize autocomplete functionality
+        initSearchAutocomplete('search-input', 'search-suggestions');
+
+        // Handle Enter key to navigate to search results page
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const query = searchInput.value.trim();
+                if (query) {
+                    window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
+                }
             }
         });
     }
 
+    // Handle search button click
     if (searchBtn) {
         searchBtn.addEventListener('click', () => {
             const query = searchInput.value.trim();
-            if (query.length > 0) {
-                const results = searchProducts(query);
-                displaySearchResults(results);
+            if (query) {
+                window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
             }
         });
     }
-}
-
-// Display search results
-function displaySearchResults(products) {
-    const container = document.getElementById('products-container');
-    if (!container) return;
-
-    if (products.length === 0) {
-        container.innerHTML = '<p class="no-products">No products found matching your search.</p>';
-        return;
-    }
-
-    import('./products.js').then(module => {
-        container.innerHTML = products.map(product => module.createProductCard(product)).join('');
-    });
 }
 
 // Setup mobile menu toggle

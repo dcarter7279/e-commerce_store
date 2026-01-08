@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details - E-Store</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="css/orders.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <h1 class="logo"><a href="index.html">E-Store</a></h1>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html#products">Products</a></li>
+                    <li><a href="cart.html">Cart <span id="cart-count" class="cart-badge">0</span></a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="order-details-section">
+            <div class="container">
+                <div id="order-details-container">
+                    <!-- Order details will be loaded here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 E-Store. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module">
+        import { updateCartCount } from './js/cart.js';
+        import { renderOrderDetails } from './js/orders.js';
+
+        // Get order number from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderNumber = urlParams.get('order');
+
+        if (orderNumber) {
+            renderOrderDetails(orderNumber, 'order-details-container');
+        } else {
+            document.getElementById('order-details-container').innerHTML = `
+                <div class="error-state">
+                    <h2>Invalid Order</h2>
+                    <p>No order number provided</p>
+                    <a href="profile.html" class="btn btn-primary">View My Orders</a>
+                </div>
+            `;
+        }
+
+        updateCartCount();
+    </script>
+</body>
+</html>

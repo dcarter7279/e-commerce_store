@@ -494,6 +494,18 @@ export function createProductCard(product) {
 
     return `
         <div class="product-card" data-product-id="${product.id}">
+            <!-- Wishlist Button (top-right corner) -->
+            <button
+                class="wishlist-btn"
+                data-product-id="${product.id}"
+                aria-label="Add to wishlist"
+                title="Add to wishlist"
+            >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+            </button>
+
             <div class="product-image-container">
                 ${product.badge ? `<span class="product-badge ${product.badge.toLowerCase()}">${product.badge}</span>` : ''}
                 <a href="product-detail.html?id=${product.id}">
@@ -519,6 +531,17 @@ export function createProductCard(product) {
                     <div class="product-actions">
                         <button class="btn btn-primary add-to-cart-btn" data-product-id="${product.id}">
                             Add to Cart
+                        </button>
+                        <button
+                            class="compare-btn"
+                            data-product-id="${product.id}"
+                            title="Add to comparison"
+                        >
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 11l3 3L22 4"></path>
+                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                            </svg>
+                            Compare
                         </button>
                     </div>
                 </div>

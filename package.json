@@ -1,18 +1,28 @@
 {
-  "name": "e-commerce-stripe-backend",
+  "name": "e-commerce-backend",
   "version": "1.0.0",
-  "description": "Backend server for e-commerce site with Stripe payment integration",
+  "description": "Complete backend for e-commerce site with Stripe payment, authentication, and order management",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "start:auth": "node auth-server.js",
+    "start:orders": "node order-server.js",
+    "start:all": "concurrently \"npm run start\" \"npm run start:auth\" \"npm run start:orders\"",
     "dev": "nodemon server.js",
+    "dev:auth": "nodemon auth-server.js",
+    "dev:orders": "nodemon order-server.js",
+    "dev:all": "concurrently \"npm run dev\" \"npm run dev:auth\" \"npm run dev:orders\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "stripe",
     "payment",
+    "authentication",
+    "order-management",
     "e-commerce",
-    "express"
+    "express",
+    "jwt",
+    "nodemailer"
   ],
   "author": "",
   "license": "ISC",
@@ -20,9 +30,14 @@
     "express": "^4.18.2",
     "stripe": "^14.10.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "express-rate-limit": "^7.1.5",
+    "nodemailer": "^6.9.7"
   },
   "devDependencies": {
-    "nodemon": "^3.0.2"
+    "nodemon": "^3.0.2",
+    "concurrently": "^8.2.2"
   }
 }

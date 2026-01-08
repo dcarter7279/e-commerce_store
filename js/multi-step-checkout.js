@@ -2,6 +2,8 @@
 // Handles form validation, step navigation, and order processing
 
 import { getCart, clearCart, calculateCartTotals } from './cart.js';
+import { createOrder, saveOrderToLocalStorage } from './orders.js';
+import { getCurrentUser } from './auth.js';
 
 // State management
 let currentStep = 1;
@@ -523,37 +525,97 @@ function handleEdit(e) {
 }
 
 // Handle place order
-function handlePlaceOrder(e) {
+async function handlePlaceOrder(e) {
     e.preventDefault();
 
-    // In production, this would send data to backend
-    const orderNumber = generateOrderNumber();
+    // Get current user if logged in
+    const user = getCurrentUser();
+    const cart = getCart();
     const totals = updateOrderSummary();
 
-    // Update confirmation page
-    document.getElementById('confirmation-order-number').textContent = orderNumber;
-    document.getElementById('confirmation-email').textContent = formData.shipping.email;
-    document.getElementById('confirmation-total').textContent = `$${totals.total.toFixed(2)}`;
-
-    // Clear cart
-    clearCart();
-
-    // Go to confirmation step
-    goToStep(4);
-
-    // Store order in localStorage (for demo purposes)
-    const order = {
-        orderNumber,
-        date: new Date().toISOString(),
+    // Prepare order data
+    const orderData = {
+        userId: user ? user.id : null,
+        items: cart,
         shipping: formData.shipping,
-        payment: { method: formData.payment.method },
-        items: getCart(),
-        totals
+        payment: {
+            method: formData.payment.method,
+            transactionId: formData.payment.transactionId || null
+        },
+        shippingMethod: formData.shippingMethod || 'standard'
     };
 
-    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-    orders.push(order);
-    localStorage.setItem('orders', JSON.stringify(orders));
+    // Show processing state
+    const placeOrderBtn = document.getElementById('place-order-btn');
+    const originalText = placeOrderBtn.textContent;
+    placeOrderBtn.textContent = 'Processing Order...';
+    placeOrderBtn.disabled = true;
+
+    try {
+        // Create order via API
+        const result = await createOrder(orderData);
+
+        if (result.success) {
+            const order = result.order;
+
+            // Update confirmation page
+            document.getElementById('confirmation-order-number').textContent = order.orderNumber;
+            document.getElementById('confirmation-email').textContent = formData.shipping.email;
+            document.getElementById('confirmation-total').textContent = `$${totals.total.toFixed(2)}`;
+
+            // Also save to localStorage as backup
+            saveOrderToLocalStorage(order);
+
+            // Clear cart
+            clearCart();
+
+            // Go to confirmation step
+            goToStep(4);
+
+            console.log('✅ Order created successfully:', order.orderNumber);
+        } else {
+            throw new Error(result.error || 'Failed to create order');
+        }
+    } catch (error) {
+        console.error('Order creation error:', error);
+
+        // Fallback: Create order locally
+        const orderNumber = generateOrderNumber();
+        const order = {
+            id: crypto.randomUUID ? crypto.randomUUID() : generateOrderNumber(),
+            orderNumber,
+            userId: user ? user.id : null,
+            items: cart,
+            shipping: formData.shipping,
+            payment: {
+                method: formData.payment.method,
+                transactionId: formData.payment.transactionId || null
+            },
+            shippingMethod: formData.shippingMethod || 'standard',
+            totals: totals,
+            status: 'pending',
+            createdAt: new Date().toISOString()
+        };
+
+        // Save to localStorage
+        saveOrderToLocalStorage(order);
+
+        // Update confirmation page
+        document.getElementById('confirmation-order-number').textContent = orderNumber;
+        document.getElementById('confirmation-email').textContent = formData.shipping.email;
+        document.getElementById('confirmation-total').textContent = `$${totals.total.toFixed(2)}`;
+
+        // Clear cart
+        clearCart();
+
+        // Go to confirmation step
+        goToStep(4);
+
+        console.log('⚠️ Order saved locally (API unavailable):', orderNumber);
+    } finally {
+        placeOrderBtn.textContent = originalText;
+        placeOrderBtn.disabled = false;
+    }
 }
 
 // Generate order number

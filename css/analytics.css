@@ -1,0 +1,383 @@
+/* Analytics and Cookie Consent Styles */
+
+/* Cookie Consent Banner */
+.cookie-consent-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--white);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    z-index: 10000;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.cookie-consent-banner.show {
+    transform: translateY(0);
+}
+
+.consent-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+}
+
+.consent-message h3 {
+    font-size: 1.25rem;
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-sm);
+}
+
+.consent-message p {
+    color: var(--text-dark);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.6;
+}
+
+.consent-actions {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+
+.consent-actions .btn {
+    flex: 0 0 auto;
+}
+
+/* Consent Details/Customization */
+.consent-details {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg) var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+}
+
+.consent-category {
+    margin-bottom: var(--spacing-md);
+}
+
+.consent-category label {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+}
+
+.consent-category label:hover {
+    background: var(--bg-light);
+}
+
+.consent-category input[type="checkbox"] {
+    margin-top: 3px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+}
+
+.consent-category input[type="checkbox"]:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.consent-category span {
+    flex: 1;
+    color: var(--text-dark);
+    line-height: 1.5;
+}
+
+.consent-category strong {
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+/* Privacy Settings Button */
+.privacy-settings-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+    z-index: 9999;
+}
+
+.privacy-settings-btn:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--white);
+    transform: scale(1.1);
+}
+
+.privacy-settings-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Analytics Dashboard Widgets */
+.analytics-widget {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--spacing-lg);
+}
+
+.analytics-widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--bg-light);
+}
+
+.analytics-widget-title {
+    font-size: 1.25rem;
+    color: var(--text-dark);
+    margin: 0;
+}
+
+.analytics-widget-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: var(--spacing-md) 0;
+}
+
+.analytics-widget-label {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.analytics-widget-change {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.875rem;
+    margin-top: var(--spacing-sm);
+}
+
+.analytics-widget-change.positive {
+    color: var(--success-color);
+}
+
+.analytics-widget-change.negative {
+    color: var(--danger-color);
+}
+
+/* Analytics Grid */
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Conversion Funnel Visualization */
+.funnel-visualization {
+    padding: var(--spacing-lg) 0;
+}
+
+.funnel-step {
+    position: relative;
+    background: var(--bg-light);
+    padding: var(--spacing-md) var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+    border-radius: var(--border-radius);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.funnel-step:hover {
+    background: #e8f4fd;
+    transform: translateX(5px);
+}
+
+.funnel-step::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -12px;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 12px solid var(--bg-light);
+}
+
+.funnel-step:last-child::before {
+    display: none;
+}
+
+.funnel-step-name {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.funnel-step-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.funnel-step-dropoff {
+    font-size: 0.875rem;
+    color: var(--danger-color);
+    margin-top: 0.25rem;
+}
+
+/* Event Timeline */
+.event-timeline {
+    position: relative;
+    padding-left: 40px;
+}
+
+.event-timeline::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border-color);
+}
+
+.event-timeline-item {
+    position: relative;
+    margin-bottom: var(--spacing-lg);
+}
+
+.event-timeline-marker {
+    position: absolute;
+    left: -32px;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    border: 3px solid var(--white);
+    box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+.event-timeline-content {
+    background: var(--bg-light);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+}
+
+.event-timeline-time {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin-bottom: 0.25rem;
+}
+
+.event-timeline-name {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+}
+
+.event-timeline-details {
+    font-size: 0.875rem;
+    color: var(--text-dark);
+}
+
+/* Tracking Status Indicator */
+.tracking-status {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 9998;
+}
+
+.tracking-status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--success-color);
+    animation: pulse 2s infinite;
+}
+
+.tracking-status.disabled .tracking-status-indicator {
+    background: var(--danger-color);
+    animation: none;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .consent-content {
+        padding: var(--spacing-md);
+    }
+
+    .consent-actions {
+        flex-direction: column;
+    }
+
+    .consent-actions .btn {
+        width: 100%;
+    }
+
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .privacy-settings-btn {
+        width: 44px;
+        height: 44px;
+        bottom: 10px;
+        left: 10px;
+    }
+
+    .tracking-status {
+        top: auto;
+        bottom: 70px;
+        right: 10px;
+    }
+}
+
+/* Print - Hide Analytics UI */
+@media print {
+    .cookie-consent-banner,
+    .privacy-settings-btn,
+    .tracking-status {
+        display: none !important;
+    }
+}

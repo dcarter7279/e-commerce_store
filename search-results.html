@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - E-Store</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/search.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">E-Store</a>
+
+                <!-- Search Bar -->
+                <div class="search-container">
+                    <input
+                        type="text"
+                        id="search-input"
+                        class="search-input"
+                        placeholder="Search products..."
+                        autocomplete="off"
+                    >
+                    <button type="button" class="search-button" id="search-button">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+                    <div id="search-suggestions" class="search-suggestions"></div>
+                </div>
+
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="products.html">Products</a>
+                    <a href="#" id="auth-link">Login</a>
+                    <a href="cart.html" class="cart-link">
+                        Cart
+                        <span class="cart-count" id="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Search Results Section -->
+    <section class="search-results-section">
+        <div class="container">
+            <div class="search-layout">
+                <!-- Filters Sidebar -->
+                <aside class="filters-sidebar">
+                    <div class="filters-header">
+                        <h3>Filters</h3>
+                        <button type="button" class="btn-text" id="clear-filters">Clear All</button>
+                    </div>
+
+                    <!-- Category Filter -->
+                    <div class="filter-group">
+                        <h4 class="filter-title">Category</h4>
+                        <div class="filter-options" id="category-filters">
+                            <!-- Dynamically populated -->
+                        </div>
+                    </div>
+
+                    <!-- Price Range Filter -->
+                    <div class="filter-group">
+                        <h4 class="filter-title">Price Range</h4>
+                        <div class="price-inputs">
+                            <input
+                                type="number"
+                                id="min-price"
+                                class="price-input"
+                                placeholder="Min"
+                                min="0"
+                            >
+                            <span>-</span>
+                            <input
+                                type="number"
+                                id="max-price"
+                                class="price-input"
+                                placeholder="Max"
+                                min="0"
+                            >
+                        </div>
+                        <button type="button" class="btn btn-secondary btn-small" id="apply-price">Apply</button>
+                    </div>
+
+                    <!-- Availability Filter -->
+                    <div class="filter-group">
+                        <h4 class="filter-title">Availability</h4>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" id="in-stock-filter">
+                            <span>In Stock Only</span>
+                        </label>
+                    </div>
+
+                    <!-- Sale Filter -->
+                    <div class="filter-group">
+                        <h4 class="filter-title">Special Offers</h4>
+                        <label class="filter-checkbox">
+                            <input type="checkbox" id="on-sale-filter">
+                            <span>On Sale</span>
+                        </label>
+                    </div>
+                </aside>
+
+                <!-- Results Area -->
+                <div class="results-area">
+                    <!-- Search Header -->
+                    <div class="search-header">
+                        <div class="search-info">
+                            <h1 id="search-query-title">Search Results</h1>
+                            <p id="results-count" class="results-count"></p>
+                        </div>
+                        <div class="sort-controls">
+                            <label for="sort-select">Sort by:</label>
+                            <select id="sort-select" class="sort-select">
+                                <option value="relevance">Relevance</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="rating">Customer Rating</option>
+                                <option value="name">Name: A to Z</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Active Filters -->
+                    <div id="active-filters" class="active-filters"></div>
+
+                    <!-- Results Grid -->
+                    <div id="search-results" class="results-grid">
+                        <!-- Dynamically populated -->
+                    </div>
+
+                    <!-- No Results State -->
+                    <div id="no-results" class="no-results" style="display: none;">
+                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                        <h3>No results found</h3>
+                        <p>Try adjusting your search or filters to find what you're looking for.</p>
+                    </div>
+
+                    <!-- Loading State -->
+                    <div id="loading-state" class="loading-state">
+                        <div class="spinner"></div>
+                        <p>Searching products...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>E-Store</h3>
+                    <p>Your one-stop shop for quality products</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="products.html">Products</a></li>
+                        <li><a href="cart.html">Cart</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Shipping Info</a></li>
+                        <li><a href="#">Returns</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">FB</a>
+                        <a href="#" aria-label="Twitter">TW</a>
+                        <a href="#" aria-label="Instagram">IG</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 E-Store. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="js/search-results.js"></script>
+</body>
+</html>

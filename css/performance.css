@@ -1,0 +1,424 @@
+/* Performance and Loading States CSS */
+
+/* Lazy Image Loading States */
+img[data-src] {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+.lazy-loading {
+    opacity: 0.6;
+    filter: blur(5px);
+    transition: opacity 0.3s, filter 0.3s;
+}
+
+.lazy-loaded {
+    opacity: 1;
+    filter: blur(0);
+    animation: fadeIn 0.5s ease-in;
+}
+
+.lazy-error {
+    background: #ffebee;
+    border: 2px dashed #ef5350;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Progressive Image Loading */
+.progressive-thumbnail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(10px);
+    transition: opacity 0.5s;
+}
+
+.progressive-full {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.progressive-full.loaded {
+    opacity: 1;
+}
+
+/* Background Image Loading */
+[data-bg-src] {
+    background-color: #f0f0f0;
+    background-size: cover;
+    background-position: center;
+}
+
+.bg-loaded {
+    animation: fadeInBg 0.5s ease-in;
+}
+
+@keyframes fadeInBg {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Content Loading States */
+.content-loading {
+    position: relative;
+    min-height: 200px;
+    pointer-events: none;
+}
+
+.content-loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    z-index: 1;
+}
+
+.content-loading::after {
+    content: 'Loading...';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1rem;
+    color: var(--text-light);
+    z-index: 2;
+}
+
+.content-loaded {
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content-error {
+    background: #ffebee;
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    text-align: center;
+    color: var(--danger-color);
+}
+
+/* Module Loading States */
+.module-loading {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.module-loaded {
+    animation: fadeIn 0.3s ease-in;
+}
+
+.module-error {
+    border: 2px dashed var(--danger-color);
+    padding: var(--spacing-md);
+}
+
+/* Skeleton Screens */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+}
+
+.skeleton-text {
+    height: 16px;
+    margin-bottom: 8px;
+}
+
+.skeleton-title {
+    height: 24px;
+    width: 60%;
+    margin-bottom: 16px;
+}
+
+.skeleton-image {
+    height: 200px;
+    border-radius: var(--border-radius);
+}
+
+.skeleton-card {
+    padding: var(--spacing-lg);
+    background: var(--white);
+    border-radius: var(--border-radius);
+}
+
+/* Loading Spinner */
+.spinner {
+    width: 40px;
+    height: 40px;
+    margin: 20px auto;
+    border: 4px solid var(--bg-light);
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.spinner-small {
+    width: 20px;
+    height: 20px;
+    border-width: 2px;
+}
+
+.spinner-large {
+    width: 60px;
+    height: 60px;
+    border-width: 6px;
+}
+
+/* Loading Dots */
+.loading-dots {
+    display: inline-flex;
+    gap: 8px;
+}
+
+.loading-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.loading-dots span:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.loading-dots span:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+    0%, 80%, 100% {
+        transform: scale(0);
+    }
+    40% {
+        transform: scale(1);
+    }
+}
+
+/* Progress Bar */
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--bg-light);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.progress-bar-indeterminate {
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    background-size: 200% 100%;
+    animation: progress 1.5s infinite;
+}
+
+@keyframes progress {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* Intersection Observer Fade In */
+.fade-in-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Slide In Animations */
+.slide-in-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.slide-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.slide-in-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.slide-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Performance Metrics Display (for debugging) */
+.perf-metrics {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 12px;
+    z-index: 9999;
+    max-width: 300px;
+}
+
+.perf-metrics-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.perf-metrics-label {
+    margin-right: 10px;
+}
+
+.perf-metrics-value {
+    font-weight: bold;
+}
+
+.perf-metrics-good {
+    color: #4caf50;
+}
+
+.perf-metrics-needs-improvement {
+    color: #ff9800;
+}
+
+.perf-metrics-poor {
+    color: #f44336;
+}
+
+/* Offline Indicator */
+.offline-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #ff9800;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    z-index: 9999;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+}
+
+.offline-indicator.show {
+    transform: translateY(0);
+}
+
+/* Lazy Load Placeholder */
+.lazy-placeholder {
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 14px;
+}
+
+/* Image Aspect Ratio Boxes */
+.aspect-ratio-box {
+    position: relative;
+    width: 100%;
+    padding-bottom: 75%; /* 4:3 aspect ratio */
+    overflow: hidden;
+}
+
+.aspect-ratio-box img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+    .skeleton,
+    .lazy-loading {
+        border: 2px solid currentColor;
+    }
+}
+
+/* Print Styles - Remove Loading States */
+@media print {
+    .spinner,
+    .loading-dots,
+    .progress-bar,
+    .perf-metrics,
+    .offline-indicator {
+        display: none !important;
+    }
+
+    img[data-src] {
+        background: none !important;
+    }
+}
